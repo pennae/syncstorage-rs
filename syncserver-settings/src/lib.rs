@@ -47,7 +47,6 @@ impl Settings {
 
         // Merge the config file if supplied
         if let Some(config_filename) = filename {
-            println!("merging with file {}", config_filename);
             s.merge(File::with_name(config_filename))?;
         }
 
@@ -59,26 +58,28 @@ impl Settings {
         // `SYNC_FOO__BAR_VALUE="gorp"` as `foo.bar_value = "gorp"`
         s.merge(Environment::with_prefix(&PREFIX.to_uppercase()).separator("__"))?;
 
-        s.try_into::<Self>().map_err(|e| {
-            match e {
-                // Configuration errors are not very sysop friendly, Try to make them
-                // a bit more 3AM useful.
-                ConfigError::Message(v) => {
-                    println!("Bad configuration: {:?}", &v);
-                    println!("Please set in config file or use environment variable.");
-                    println!(
-                        "For example to set `database_url` use env var `{}_DATABASE_URL`\n",
-                        PREFIX.to_uppercase()
-                    );
-                    error!("Configuration error: Value undefined {:?}", &v);
-                    ConfigError::NotFound(v)
-                }
-                _ => {
-                    error!("Configuration error: Other: {:?}", &e);
-                    e
-                }
+        match s.try_into::<Self>() {
+            Ok(mut s) => {
+                s.syncstorage.normalize();
+                Ok(s)
             }
-        })
+            // Configuration errors are not very sysop friendly, Try to make them
+            // a bit more 3AM useful.
+            Err(ConfigError::Message(v)) => {
+                println!("Bad configuration: {:?}", &v);
+                println!("Please set in config file or use environment variable.");
+                println!(
+                    "For example to set `database_url` use env var `{}_DATABASE_URL`\n",
+                    PREFIX.to_uppercase()
+                );
+                error!("Configuration error: Value undefined {:?}", &v);
+                Err(ConfigError::NotFound(v))
+            }
+            Err(e) => {
+                error!("Configuration error: Other: {:?}", &e);
+                Err(e)
+            }
+        }
     }
 
     pub fn test_settings() -> Self {
