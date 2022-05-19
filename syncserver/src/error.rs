@@ -21,7 +21,7 @@ use serde::{
     Serialize,
 };
 
-use syncstorage_common::{from_error, impl_fmt_display};
+use syncserver_common::{from_error, impl_fmt_display};
 use syncstorage_db_common::error::DbError;
 use thiserror::Error;
 

@@ -1,5 +1,5 @@
 [package]
-name = "syncstorage-common"
+name = "syncserver-common"
 version = "0.11.1"
 edition = "2021"
 
