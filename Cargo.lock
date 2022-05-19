@@ -3055,8 +3055,8 @@ dependencies = [
  "slog-stdlog",
  "slog-term",
  "syncserver-common",
+ "syncserver-db-common",
  "syncserver-settings",
- "syncstorage-db-common",
  "syncstorage-settings",
  "thiserror",
  "time 0.3.9",
@@ -3080,20 +3080,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "syncserver-settings"
-version = "0.11.1"
-dependencies = [
- "config 0.11.0",
- "serde 1.0.135",
- "slog-scope",
- "syncserver-common",
- "syncstorage-settings",
- "tokenserver-settings",
- "url 2.2.2",
-]
-
-[[package]]
-name = "syncstorage-db-common"
+name = "syncserver-db-common"
 version = "0.11.1"
 dependencies = [
  "async-trait",
@@ -3111,6 +3098,19 @@ dependencies = [
  "serde_json",
  "syncserver-common",
  "thiserror",
+ "url 2.2.2",
+]
+
+[[package]]
+name = "syncserver-settings"
+version = "0.11.1"
+dependencies = [
+ "config 0.11.0",
+ "serde 1.0.135",
+ "slog-scope",
+ "syncserver-common",
+ "syncstorage-settings",
+ "tokenserver-settings",
  "url 2.2.2",
 ]
 
@@ -3304,7 +3304,7 @@ dependencies = [
  "backtrace",
  "serde 1.0.135",
  "serde_json",
- "syncstorage-db-common",
+ "syncserver-db-common",
  "thiserror",
 ]
 

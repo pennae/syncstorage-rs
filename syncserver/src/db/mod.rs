@@ -11,7 +11,7 @@ use std::time::Duration;
 
 use cadence::{Gauged, StatsdClient};
 use futures::TryFutureExt;
-use syncstorage_db_common::{
+use syncserver_db_common::{
     error::{DbError, DbErrorKind},
     results, DbPool, GetPoolState, PoolState,
 };
